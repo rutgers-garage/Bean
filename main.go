@@ -31,7 +31,7 @@ func (a *API) OpenChrome(url string) error {
 	if err != nil {
 		log.Fatalf("could not create page: %v", err)
 	}
-	if _, err = page.Goto("https://news.ycombinator.com"); err != nil {
+	if _, err = page.Goto(url); err != nil {
 		log.Fatalf("could not goto: %v", err)
 	}
 
