@@ -15,7 +15,7 @@ func main() {
 	var reply Item
 	var db []Item
 
-	client, err := rpc.DialHTTP("tcp", "192.168.1.158:4040")
+	client, err := rpc.DialHTTP("tcp", "localhost:4040")
 
 	if err != nil {
 		log.Fatal("Connection error: ", err)
@@ -37,6 +37,8 @@ func main() {
 	client.Call("API.DeleteItem", c, &reply)
 	client.Call("API.GetDB", "", &db)
 	fmt.Println("Database: ", db)
+
+	client.Call("API.OpenChrome", "https://google.com", &reply)
 
 	client.Call("API.GetByName", "First", &reply)
 	fmt.Println("first item: ", reply)

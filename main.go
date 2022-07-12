@@ -5,6 +5,8 @@ import (
 	"net"
 	"net/http"
 	"net/rpc"
+
+	"github.com/playwright-community/playwright-go"
 )
 
 type Item struct {
@@ -15,6 +17,26 @@ type Item struct {
 type API int
 
 var database []Item
+
+func (a *API) OpenChrome(url string) error {
+	pw, err := playwright.Run()
+	if err != nil {
+		log.Fatalf("could not start playwright: %v", err)
+	}
+	browser, err := pw.Chromium.Launch()
+	if err != nil {
+		log.Fatalf("could not launch browser: %v", err)
+	}
+	page, err := browser.NewPage()
+	if err != nil {
+		log.Fatalf("could not create page: %v", err)
+	}
+	if _, err = page.Goto("https://news.ycombinator.com"); err != nil {
+		log.Fatalf("could not goto: %v", err)
+	}
+
+	return nil
+}
 
 func (a *API) GetDB(empty string, reply *[]Item) error {
 	*reply = database
