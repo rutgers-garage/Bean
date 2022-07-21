@@ -18,7 +18,9 @@ type API int
 var database []Item
 
 func (a *API) OpenChrome(url string) error {
-	out, err := exec.Command("chromium-broswer %s", url)
+	out := exec.Command("chromium-broswer", url)
+
+	err := out.Run()
 
 	if err != nil {
 		log.Fatal("cannot open chrome", err)
